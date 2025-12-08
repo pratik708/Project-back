@@ -76,16 +76,10 @@ resource "null_resource" "provisioner" {
   }
 
   provisioner "local-exec" {
-    command = "wsl ansible-playbook -i aws_hosts playbook.yml -v"
-    environment = {
-      ANSIBLE_CONFIG = "${path.module}/ansible.cfg"
-    }
+    command = "wsl ansible-playbook -i aws_hosts --private-key terraform.pem playbook.yml -v"
   }
 
   provisioner "local-exec" {
-    command = "wsl ansible-playbook -i aws_hosts prometheus-playbook.yml -v"
-    environment = {
-      ANSIBLE_CONFIG = "${path.module}/ansible.cfg"
-    }
+    command = "wsl ansible-playbook -i aws_hosts --private-key terraform.pem prometheus-playbook.yml -v"
   }
 }
