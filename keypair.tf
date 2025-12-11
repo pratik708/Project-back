@@ -20,7 +20,7 @@ resource "null_resource" "chmod_key" {
   depends_on = [local_file.private_key]
 
   provisioner "local-exec" {
-    command = "wsl chmod 600 ${local_file.private_key.filename}"
+    command = "chmod 600 ${local_file.private_key.filename}"
   }
 }
 
