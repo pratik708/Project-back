@@ -67,7 +67,7 @@ resource "null_resource" "provisioner" {
 
   depends_on = [
     local_file.ansible_inventory,
-    null_resource.chmod_key,
+    local_file.private_key,
     null_resource.wait_for_ssh
   ]
 
@@ -76,10 +76,10 @@ resource "null_resource" "provisioner" {
   }
 
   provisioner "local-exec" {
-    command = "wsl ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i aws_hosts --private-key terraform.pem -u ubuntu playbook.yml -v"
+    command = "wsl bash -c 'cp terraform.pem /tmp/terraform.pem && chmod 600 /tmp/terraform.pem && ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i aws_hosts --private-key /tmp/terraform.pem -u ubuntu playbook.yml -v'"
   }
 
   provisioner "local-exec" {
-    command = "wsl ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i aws_hosts --private-key terraform.pem -u ubuntu prometheus-playbook.yml -v"
+    command = "wsl bash -c 'cp terraform.pem /tmp/terraform.pem && chmod 600 /tmp/terraform.pem && ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i aws_hosts --private-key /tmp/terraform.pem -u ubuntu prometheus-playbook.yml -v'"
   }
 }
