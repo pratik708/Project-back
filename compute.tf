@@ -62,28 +62,6 @@ resource "null_resource" "wait_for_ssh" {
   }
 }
 
-# resource "null_resource" "provisioner" {
-#   count = var.main_instance_count > 0 ? 1 : 0
-
-#   depends_on = [
-#     local_file.ansible_inventory,
-#     local_file.private_key,
-#     null_resource.wait_for_ssh
-#   ]
-
-#   triggers = {
-#     instance_ids = join(",", aws_instance.web_server.*.id)
-#   }
-
-#   provisioner "local-exec" {
-#     command = "wsl bash -lc 'cp terraform.pem /tmp/terraform.pem && chmod 600 /tmp/terraform.pem && tr -d \"\\r\" < aws_hosts > /tmp/aws_hosts && ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /tmp/aws_hosts --private-key /tmp/terraform.pem -u ubuntu playbook.yml -v'"
-# }
-
-#   provisioner "local-exec" {
-#     command = "wsl bash -c \"cp terraform.pem /tmp/terraform.pem && chmod 600 /tmp/terraform.pem && tr -d '\\r' < aws_hosts > /tmp/aws_hosts && ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /tmp/aws_hosts --private-key /tmp/terraform.pem -u ubuntu prometheus-playbook.yml -v\""
-#   }
-# }
-
 resource "null_resource" "provisioner" {
   count = var.main_instance_count > 0 ? 1 : 0
 
@@ -101,4 +79,3 @@ resource "null_resource" "provisioner" {
     command = "wsl bash -c \"cp terraform.pem /tmp/terraform.pem && chmod 600 /tmp/terraform.pem && tr -d '\\r' < aws_hosts > /tmp/aws_hosts && ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /tmp/aws_hosts --private-key /tmp/terraform.pem -u ubuntu playbook.yml -v && ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i /tmp/aws_hosts --private-key /tmp/terraform.pem -u ubuntu prometheus-playbook.yml -v\""
   }
 }
-#commit test
