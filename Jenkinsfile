@@ -48,7 +48,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline finished'
+            echo 'Pipeline finished successfully'
             cleanWs()
         }
     }
