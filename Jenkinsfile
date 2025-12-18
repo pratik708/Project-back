@@ -33,7 +33,14 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -out=tfplan'
+                script {
+                    echo "Running pipeline for branch: ${env.BRANCH_NAME}"
+                    def tfvarsFile = 'dev.tfvars'
+                    if (env.BRANCH_NAME == 'main') {
+                        tfvarsFile = 'main.tfvars'
+                    }
+                    sh "terraform plan -var-file=${tfvarsFile} -out=tfplan"
+                }
             }
         }
 
