@@ -30,3 +30,4 @@ awscliv2.zip
 
 # Ignore vendored AWS CLI tool
 /aws/
+

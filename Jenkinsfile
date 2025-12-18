@@ -22,7 +22,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh 'terraform init'
-                sh 'BRANCH_NAME.tfvars'
+                sh 'env.$BRANCH_NAME.tfvars'
             }
         }
 
