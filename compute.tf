@@ -50,6 +50,10 @@ resource "null_resource" "wait_for_ssh" {
 
   depends_on = [aws_instance.web_server]
 
+  triggers = {
+    instance_id = aws_instance.web_server[count.index].id
+  }
+
   connection {
     type        = "ssh"
     user        = "ubuntu"
