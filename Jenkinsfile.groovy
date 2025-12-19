@@ -34,7 +34,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    echo "Running pipeline for branch: ${env.BRANCH_NAME}"
+                    echo "Running the pipeline for branch: ${env.BRANCH_NAME}"
                     def tfvarsFile = 'dev.tfvars'
                     if (env.BRANCH_NAME == 'main') {
                         tfvarsFile = 'main.tfvars'

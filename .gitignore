@@ -11,6 +11,8 @@ crash.*.log
 # Ignore sensitive variable files
 *.tfvars
 *.tfvars.json
+!dev.tfvars
+!main.tfvars
 # Ignore override files
 override.tf
 override.tf.json
@@ -30,4 +32,3 @@ awscliv2.zip
 
 # Ignore vendored AWS CLI tool
 /aws/
-
